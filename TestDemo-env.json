@@ -1,0 +1,37 @@
+{
+  "id": "326e9960-46e0-4813-bbe5-edf010dc2593",
+  "name": "TestDemo",
+  "values": [
+    {
+      "key": "token",
+      "value": "124ce6c8b174e98773ab9f4281b5d56d3e7e59ab",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "enabled": true
+    },
+    {
+      "key": "baseURL",
+      "value": "https://beta.todoist.com",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "enabled": true
+    },
+    {
+      "key": "projectId",
+      "value": 2195996266,
+      "enabled": true
+    },
+    {
+      "key": "name",
+      "value": "Music",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2018-10-02T03:58:29.695Z",
+  "_postman_exported_using": "Postman/6.3.0"
+}

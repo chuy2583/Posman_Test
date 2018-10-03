@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "32d36f3c-b2f9-4693-a4b8-243d00ef1819",
+		"name": "ToDoist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Postman BDD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8af4ef41-d447-45f3-987a-57c17a9be697",
+						"type": "text/javascript",
+						"exec": [
+							"postman.setGlobalVariable('postmanBDD', responseBody);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.min.js",
+					"protocol": "http",
+					"host": [
+						"bigstickcarpet",
+						"com"
+					],
+					"path": [
+						"postman-bdd",
+						"dist",
+						"postman-bdd.min.js"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "506a5b59-e236-4a43-a630-9c1f508432b0",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"//Guardar una variable en el ambiente y en globals",
+							"pm.environment.set(\"projectId\", response.body.id);",
+							"",
+							"//Traerte una variable de ambiente",
+							"console.log(pm.globals.get(\"projects\"));"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Music\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get the poject by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c62368e0-3fcf-4be4-a7ea-22d76d771e65",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"",
+							"pm.environment.set(\"projectId\", response.body.id);",
+							"pm.environment.set(\"name\", response.body.name);",
+							"",
+							"describe(\"Validate project data\", () => {",
+							"    it(\"Should have the correct state name\" , () => {",
+							"        //pm.response.body.name.should.eql(\"Series\");",
+							"        console.log(pm.environment.get(\"name\"));",
+							"        expect(pm.environment.get(\"name\")).to.equals(\"Music\");",
+							"    });",
+							"    ",
+							"    it(\"should be a 200 response\", () => {",
+							"        //expect(pm.response.to.have.status(200));",
+							"        expect(response.status).to.equals(200);",
+							"    });",
+							"    ",
+							"    it(\"should time less than  500ms\", () => {",
+							"       expect(responseTime).to.be.below(500);",
+							"    });",
+							"    ",
+							"    ",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "87c8f920-bd40-41e9-9f77-7dd265a52a25",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate project data\", () => {",
+							"    it(\"The name of the project should be updated.\" , () => {",
+							"        expect(response.status).to.equals(204);",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Music Updated\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "29941014-c5a1-44c5-8620-eac9b8327931",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate project data was deleted\", () => {",
+							"    it(\"Should delete the correct state name\" , () => {",
+							"        //pm.response.body.name.should.eql(\"Series\");",
+							"        console.log(pm.environment.get(\"name\"));",
+							"        ",
+							"       // expect(pm.environment.get(\"name\")).to.(\"Music\");",
+							"       expect(response.status).to.equals(204);",
+							"    });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all the projects",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
